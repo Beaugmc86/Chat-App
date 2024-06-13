@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { StyleSheet, View, Text, Button, TextInput, TouchableOpacity, ImageBackground, Alert } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
 
 const Start = ({ navigation }) => {
   const [name, setName] = useState('');
@@ -22,6 +22,7 @@ const Start = ({ navigation }) => {
             placeholder='Your Name'
           />
           <Text style={styles.chooseBgColor}>Choose Background Color</Text>
+          {/* Set color map for buttons to choose color of text background in chat screen */}
           <View style={styles.colorButtonContainer}>
             {colors.map((color, index) => (
               <TouchableOpacity
@@ -35,6 +36,7 @@ const Start = ({ navigation }) => {
               />
             ))}
           </View>
+          {/* Button to navigate to chat screen */}
           <TouchableOpacity
             style={styles.button}
             onPress={() => navigation.navigate('Chat', { name: name})}

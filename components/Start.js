@@ -11,14 +11,14 @@ const Start = ({ navigation }) => {
   // Handle sign-in anonymously process for the user.
   const signInUser = () => {
     signInAnonymously(auth)
-      .then(res => {
+      .then(result => {
         navigation.navigate("Chat", {
-          userID: res.user.uid, 
+          userID: result.user.uid, 
           name: name, 
           background: background
         });
       Alert.alert("Signed in Successfully");
-      }).catch(err => {
+      }).catch(error => {
         Alert.alert("Unable to sign in, try later again");
       }); 
   };
@@ -62,7 +62,7 @@ const Start = ({ navigation }) => {
             accessibilityRole="button"
             accessibilityHint="Lets you choose to enter the chat room"
             style={styles.button}
-            onPress={() => navigation.navigate('Chat', { name: name, background: background})}
+            onPress={signInUser}
           >
             <Text style={styles.buttonText}>Go to Chat</Text>
           </TouchableOpacity>

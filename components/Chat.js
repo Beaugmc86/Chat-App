@@ -6,7 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import CustomActions from './CustomActions';
 import MapView from 'react-native-maps';
 
-const Chat = ({ route, navigation, db, isConnected }) => {
+const Chat = ({ route, navigation, db, isConnected, storage }) => {
   const { name, background, userID } = route.params;
   const [messages, setMessages] = useState([]);
   
@@ -45,6 +45,7 @@ const Chat = ({ route, navigation, db, isConnected }) => {
     }
   }, [isConnected]);  //isConnected used as a dependency value enabling the component to call the callback of useEffect whenewer the isConnected prop's value changes.
 
+  // Load saved messages for offline use.
   const cacheMessages = async (messagesToCache) => {
     try {
       await AsyncStorage.setItem("messages", JSON.stringify(messagesToCache));
@@ -70,6 +71,7 @@ const Chat = ({ route, navigation, db, isConnected }) => {
     else return null;
    }
 
+  // Renders text bubble with colors assigned to sender and receiver.
   const renderBubble = (props) => {
     return <Bubble {...props}
       wrapperStyle={{
@@ -83,19 +85,23 @@ const Chat = ({ route, navigation, db, isConnected }) => {
     />
   }
 
+  // Render actions from action sheet to appear in input toolbar.
   const renderCustomActions = (props) => {
-    return <CustomActions {...props} />;
+    return <CustomActions storage={storage} {...props} />;
   };
 
+  // Render location sharing messages.
   const renderCustomView = (props) => {
     const { currentMessage } = props;
     if (currentMessage.location) {
       return (
           <MapView
-            style={{width: 150,
+            style={{
+              width: 150,
               height: 100,
               borderRadius: 13,
-              margin: 3}}
+              margin: 3
+            }}
             region={{
               latitude: currentMessage.location.latitude,
               longitude: currentMessage.location.longitude,

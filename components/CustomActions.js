@@ -88,6 +88,10 @@ const CustomActions = ({ wrapperStyle, iconTextStyle, onSend, storage, userID })
 
   return (
     <TouchableOpacity
+      accessible={true}
+      accessibilityLabel="Actions"
+      accessibilityHint="Lets you send a photo or location to chat."
+      accessibilityRole="button"
       style={styles.container}
       onPress={onActionPress}
       >
